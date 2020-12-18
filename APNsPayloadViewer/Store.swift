@@ -37,6 +37,9 @@ final class Store{
     func payloads(location: Int, length: Int) -> [Payload]{
         let fileManager = FileManager.default
         let files = try! fileManager.contentsOfDirectory(atPath: ifNeedCreateDirectoryPath())
+        guard files.count != 0 else {
+            return []
+        }
         let limit = { files.count < (location + length) ? files.count : location + length }
         return files
             .map{ ($0 as NSString).deletingPathExtension }
